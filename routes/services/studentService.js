@@ -1,10 +1,12 @@
-const {getStudentDAO, regStudentDAO} = require('../dao/studentDAO')
+const {getStudentDAO, regStudentDAO, loginDAO} = require('../dao/studentDAO')
 
-function getStudentService(req){
+async function getStudentService(req){
     console.log('getstudentservie')
-    const data = req.query
-    const response = getStudentDAO()
-    return response
+    const response = await getStudentDAO()
+    return response.map((obj) => {
+        delete obj.pwd
+        return obj;
+    })
 }
 
 async function regStudentService(req){
@@ -13,4 +15,10 @@ async function regStudentService(req){
     return result;
 }
 
-module.exports = {getStudentService, regStudentService}
+async function loginService(req){
+    const data = req.body.data;
+    const response = await loginDAO(data);
+    return response
+}
+
+module.exports = {getStudentService, regStudentService, loginService}
