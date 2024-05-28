@@ -25,7 +25,9 @@ router.get('/get-std-by-id',
  */
 
 router.post('/reg-std', async function (req, res, next) {
+    console.log('reg-std called')
     const result = await regStudentService(req)
+    console.log(result, 'result')
     res.send(result);
 })
 
